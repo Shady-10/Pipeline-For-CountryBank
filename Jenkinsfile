@@ -3,7 +3,7 @@ pipeline{
     agent any 
 
     tools{
-        jdk 'oracleJDK11'
+        jdk 'OracleJDK11'
     }
 
     stages{
