@@ -46,7 +46,7 @@ pipeline {
                     -Dsonar.projectName=CountryBank \
                     -Dsonar.projectValue=1.0 \
                     -Dsonar.sources=src/ \
-                    -Dsonar.java.binaries=/application/country_bank-1.0.jar'''  // Adjust this path based on your Docker image'''
+                    -Dsonar.java.binaries=build/classes/java/main"""
                 }
             }
         }
