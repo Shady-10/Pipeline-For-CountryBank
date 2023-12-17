@@ -27,6 +27,16 @@ pipeline {
             }
         }
 
+        // Debug Step to Print Current Directory and List Files
+        stage('Debug') {
+            steps {
+                script {
+                    sh 'pwd'  // Print the current directory
+                    sh 'ls -al'  // List all files and directories in the current location
+                }
+            }
+        }
+        
         stage('Building Docker Image') {
             steps {
                 script {
