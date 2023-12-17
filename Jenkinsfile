@@ -1,8 +1,10 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'OracleJDK11'
+    environment{
+        regisrtyCred = 'ecr:us-east-1:awscred'
+        repoURL = '228907518146.dkr.ecr.us-east-1.amazonaws.com/country-bank'
+        countryBankRegistry = '228907518146.dkr.ecr.us-east-1.amazonaws.com'
     }
 
     stages {
@@ -30,13 +32,33 @@ pipeline {
                 sh 'trivy fs .'
             }
         }
-        // Stage Four (Docker)
-        
+        // Stage Four (Building Docker Image)
+
         stage('Docker'){
 
             steps{
 
-                sh 'docker-compose up -d'
+                script{
+
+                    dockerImage = docker.build(repoURL + ":$BUILD_NUMBER" , ".")
+                }
+            }
+        }
+
+        // Stage Five (Uploading To ECR)
+
+        stage('Uploading'){
+
+            steps{
+
+                script{
+
+                    docker.withRegistry(countryBankRegistry,regisrtyCred){
+
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push("latest")
+                    }
+                }
             }
         }
     }
