@@ -44,7 +44,9 @@ pipeline {
 
                     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=CountryBank \
                     -Dsonar.projectName=CountryBank \
-                    -Dsonar.projectValue=1.0'''
+                    -Dsonar.projectValue=1.0 \
+                    -Dsonar.sources=. \\ 
+                    -Dsonar.java.binaries=/application/country_bank-1.0.jar'''  // Adjust this path based on your Docker image'''
                 }
             }
         }
