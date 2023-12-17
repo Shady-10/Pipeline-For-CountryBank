@@ -50,7 +50,7 @@ pipeline {
 
                     def tmpDir='/tmp/binary'
                     sh "mkdir -p ${tmpDir}"
-                    sh "unzip -o /application/country_bank-1.0.jar -d ${tempDir}"
+                    sh "unzip -o /application/country_bank-1.0.jar -d ${tmpDir}"
 
                     withSonarQubeEnv('SONAR'){
 
