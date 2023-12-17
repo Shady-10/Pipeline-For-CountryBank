@@ -31,6 +31,14 @@ pipeline {
             }
         }
 
+
+        stage('Docker'){
+
+            steps{
+
+                sh 'docker-compose up -d'
+            }
+        }
        // Stage Four (SonarQube Analysis)
 
         stage('SonarQube') {
