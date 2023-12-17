@@ -38,15 +38,28 @@ pipeline {
                 scannerHome = tool 'SONAR4.7'
             }
 
+
+
+            
+
             steps{
 
-                withSonarQubeEnv('SONAR'){
+            script{
 
-                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=CountryBank \
-                    -Dsonar.projectName=CountryBank \
-                    -Dsonar.projectValue=1.0 \
-                    -Dsonar.sources=src/ \
-                    -Dsonar.java.binaries=build/classes/java/main'''  // Adjust this path based on your Docker image'''
+                    // Extracting The Jar File Terporirly
+
+                    def tmpDir='/tmp/binary'
+                    sh "mkdir -p ${tmpDir}"
+                    sh "unzip -o /application/country_bank-1.0.jar -d ${tempDir}"
+
+                    withSonarQubeEnv('SONAR'){
+
+                        sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=CountryBank \
+                        -Dsonar.projectName=CountryBank \
+                        -Dsonar.projectValue=1.0 \
+                        -Dsonar.sources=src/ \
+                        -Dsonar.java.binaries=${tmpDir}'''  // Adjust this path based on your Docker image'''
+                    }
                 }
             }
         }
