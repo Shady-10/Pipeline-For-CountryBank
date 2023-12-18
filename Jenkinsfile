@@ -1,47 +1,42 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'OracleJDK11'
+    }
+
     stages {
+        // First Stage (Fetching The Code From GitHub Repo)
 
-        // Stage one (Fetching The Code From GITHUB)
-        stage('Git Checkout') {
+        stage('Fetching The Code') {
             steps {
-
                 git branch: 'master' , url: 'https://github.com/Shady-10/Pipeline-For-CountryBank.git'
-
             }
         }
-        
-        // Stage two (Performing OWASP Analysis)
-        stage('OWASP Dependency Check') {
 
+        // Stage Two (Performing OWASP Analysis)
+
+        stage('OWASP Analysis') {
             steps {
-
-                 dependencyCheck additionalArguments: ' --s ./ ', odcInstallation: 'DC'
-                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-
+                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-        
-        // Stage three (Trivy Analysis)
+
+        // Stage Three (Trivy Analysis)
 
         stage('Trivy') {
-
             steps {
-
-                 sh "trivy fs ."
-
+                sh 'trivy fs .'
             }
         }
+        // Stage Four (Docker)
         
-        // Stage four (Docker)
+        stage('Docker'){
 
-         stage('Build & deploy') {
+            steps{
 
-            steps {
-
-                 sh "docker-compose up -d"
-                 
+                sh 'docker-compose up -d'
             }
         }
     }
