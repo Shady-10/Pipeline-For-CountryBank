@@ -1,3 +1,51 @@
+# Jenkins CI/CD
+
+## Overview
+
+The pipeline is structured into four stages:
+
+1. Fetching The Code: This stage fetches the code from the specified GitHub repository branch.
+
+2. OWASP Analysis: This stage performs security analysis using OWASP Dependency Check, providing additional arguments and specifying the installation directory.
+
+3. Trivy Analysis: This stage uses Trivy to perform container image scanning.
+
+4. Docker: This stage deploys the country bank application using Docker Compose, bringing up the services defined in the docker-compose.yml file.
+
+
+## How to Use:
+
+#### Prerequisites:
+- Ensure Docker is installed and running on your machine.
+- Have OWASP Dependency Check and Trivy installed and configured.
+
+#### Clone the Repository:
+```shell
+git clone https://github.com/Shady-10/Pipeline-For-CountryBank.git
+cd Pipeline-For-CountryBank
+```
+
+#### Run the Pipeline:
+1. Open Jenkins or your preferred CI/CD tool.
+2. Create a new pipeline job.
+3. Copy the pipeline script provided in this README into the job configuration.
+4. Save and run the pipeline.
+
+#### View Reports:
+- OWASP Dependency Check report: `./dependency-check-report.xml`
+- Trivy report: View the output of the Trivy command in the console.
+
+#### Deploy the Country Bank Application:
+After the pipeline completes successfully, the country bank application should be deployed and accessible according to the settings in your `docker-compose.yml` file.
+
+#### Monitoring and Maintenance:
+- Regularly update your dependencies and container images to address security vulnerabilities.
+- Monitor logs and metrics to ensure the country bank application is running smoothly.
+
+
+
+
+
 [![Build Status](https://travis-ci.org/nikitap492/CountryBank.svg?branch=master)](https://travis-ci.org/nikitap492/CountryBank)
 [![codecov.io](https://codecov.io/github/nikitap492/CountryBank/coverage.svg?branch=master)](https://travis-ci.org/nikitap492/CountryBank?branch=master)
 [![CodeFactor](https://www.codefactor.io/repository/github/nikitap492/countrybank/badge)](https://www.codefactor.io/repository/github/nikitap492/countrybank)
